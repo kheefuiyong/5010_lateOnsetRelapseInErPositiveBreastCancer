@@ -58,3 +58,25 @@ write_csv(mergedClinicalData_metabric, file.path(save_path, "mergedClinicalData_
 
 message("File saved to: ", save_path)
 ```
+
+```{r}
+# Inspect columns
+unique(mergedClinicalData_metabric$ER_STATUS)
+unique(mergedClinicalData_metabric$RFS_STATUS)
+summary(mergedClinicalData_metabric$RFS_MONTHS)
+```
+
+```{r}
+# Filter for ER Positive and Recurrence Free Survival >= 60 months
+late_relapse_cohort_metabric <- mergedClinicalData_metabric %>%
+  filter(ER_STATUS == "Positive", 
+         RFS_MONTHS >= 60,
+         !is.na(RFS_STATUS))
+
+# See how many patients are left
+nrow(late_relapse_cohort_metabric)
+
+unique(late_relapse_cohort_metabric$ER_STATUS)
+unique(late_relapse_cohort_metabric$RFS_STATUS)
+summary(late_relapse_cohort_metabric$RFS_MONTHS)
+```
